@@ -3,6 +3,7 @@ import './App.css';
 import {create} from "domain";
 import {read} from "fs";
 import TodoList, {TaskType} from "./TodoList";
+import {v1} from "uuid";
 
 // CRUD читать добавлять обновлять
 // create добавлять
@@ -14,15 +15,34 @@ import TodoList, {TaskType} from "./TodoList";
 
 export type FilterValuesType = "all" | "active" | "completed"
 
-
+// state состоянние приложения. данные твоего приложения
 function App() {
     const todoListTitle = "what to learn";
     const [tasks, setTasks] = useState<Array<TaskType>>([
-        {id: 1, title: "HTML", isDone: true},
-        {id: 2, title: "CSS", isDone: true},
-        {id: 3, title: "JS/TS", isDone: false},
+        {id: v1(), title: "HTML", isDone: true},
+        {id: v1(), title: "CSS", isDone: true},
+        {id: v1(), title: "JS/TS", isDone: false},
+        {id: v1(), title: "Rest API", isDone: false},
+        {id: v1(), title: "GraphQL", isDone: false},
 
-    ])
+    ]);
+    console.log(tasks);
+
+    function addTask(title: string) {
+        let newTask = {id: v1(), title: title, isDone: false};
+        let newTasks = [newTask, ...tasks];
+        setTasks(newTasks);
+    }
+
+    function changeStatus(taskId: string, isDone: Boolean) {
+        let task = tasks.find((t) => t.id === taskId);
+        if (task) {
+            task.isDone = !task.isDone;
+        }
+
+        setTasks([...tasks]);
+    }
+
 
     const [filter, setFilter] = React.useState<FilterValuesType>("all")
 
@@ -30,7 +50,7 @@ function App() {
         setFilter(filter)
     }
 
-    const removeTask = (taskID: number) => {
+    const removeTask = (taskID: string) => {
         setTasks(tasks.filter(task => task.id !== taskID));
         console.log(tasks)
         // useEffect узнать что это
@@ -55,10 +75,11 @@ function App() {
                 tasks={tasksForRender}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
+                addTask={addTask}
+                changeTaskStatus={changeStatus}
             />
-            {/*<TodoList title={"what to buy"}/>*/}
-            {/*<TodoList title={"what to read"}/>*/}
         </div>
+
     );
 }
 
