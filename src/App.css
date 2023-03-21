@@ -1,7 +1,7 @@
+/*
 .App {
   padding: 30px;
   display: flex;
-  flex-direction: column;
 }
 
 .App > div {
@@ -16,15 +16,11 @@
   color: red;
 }
 
-
-.is-done {
-  opacity: 0.5;
-}
-
-
-
-
 .active-filter {
   background-color: aquamarine;
 }
 
+.is-done {
+  opacity: 0.5;
+}
+*/
