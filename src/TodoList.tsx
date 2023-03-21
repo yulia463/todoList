@@ -114,7 +114,6 @@ function TodoList(props: TodoListPropsType) {
                     disableElevation
                     style={{marginRight: '3px'}}
                     color={props.filter === 'completed' ? "secondary" : "primary"}
-
                     onClick={onCompletedClickHandler}>Completed
                 </Button>
             </ButtonGroup>
